@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>1i and 1j</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+<script src="react-basics.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+<script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+setInterval(()=>{
+let day=dayjs().format('HH:mm:ss')
+let date=<p>Current time:{day}</p>
+
+      const root = document.querySelector('.js-container');
+      ReactDOM.createRoot(root).render(date);
+},1000)
+
+
+    </script>
+  </body>
+</html>
