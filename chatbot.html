@@ -205,9 +205,21 @@ margin-bottom:20px;
       }
 
       function ChatMessages({ chatMessages }) {
+         const chatMessagesRef=  React.useRef(null);
+        React.useEffect(()=>{
+    const contElem =  chatMessagesRef.current
+          //ref-container with react features, can save html element
+          if(contElem){
+            contElem.scrollTop=contElem.scrollHeight;
+          }
+        },[chatMessages]);//depencency array, when does it run 
+
+
         return (
-          <div className="chat-messages-contianer">
+          <div className="chat-messages-contianer"
+          ref={chatMessagesRef}>
             {chatMessages.map((chatMessage) => {
+
               return (
                 <ChatMessage
                   message={chatMessage.message}
