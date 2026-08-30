@@ -2,6 +2,16 @@
 <html>
   <head>
     <title>React Basics</title>
+    <style>
+        .btn-class{
+            background-color: rgb(25,135,84);
+            border:none;
+            border-radius: 10px;
+            padding:10px 15px;
+            color:white;
+            cursor: pointer;
+        }
+    </style>
   </head>
   <body>
     <div class="js-container"></div>
@@ -12,9 +22,20 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
     function App(){
+        const[isButtonOn,setisButtonOn]=React.useState(false);
+     function change(){
+        if(isButtonOn===false){
+  setisButtonOn(true);
+        }else{
+  setisButtonOn(false);
+        }
+      
+        
+     }
+    
         return(
             <>
-                <button>ON</button>
+                <button className="btn-class" onClick={change}>{isButtonOn?"ON":"OFF" }</button>
             </>
         );
     }
