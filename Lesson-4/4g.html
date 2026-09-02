@@ -19,11 +19,14 @@
       function App(){
        const [time,settime]=React.useState(dayjs().format('HH:mm:ss'))
         React.useEffect(()=>{
-            
+           
         setInterval(()=>{
             settime(dayjs().format('HH:mm:ss'))
-        },1000)
-        },[] )
+              console.log('runcode')
+            
+        },1000);
+         
+        },[]);
         return <p>Current time:{time}</p>
 
       }
