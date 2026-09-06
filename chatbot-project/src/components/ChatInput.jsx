@@ -22,6 +22,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
   // Clear input
   setInputText('');
 
+
   // Add user's message
   const newChatMessages = [
     ...chatMessages,
@@ -72,7 +73,9 @@ function ChatInput({ chatMessages, setChatMessages }) {
            setInputText('');
         }
        }
-
+  function clearMessages() {
+    setChatMessages([]);
+  }
         return (
           <div className="chat-input-container">
             <input
@@ -89,6 +92,10 @@ function ChatInput({ chatMessages, setChatMessages }) {
               className="send-button"
               disabled={isLoading}
             >Send</button>
+             <button
+        onClick={clearMessages}
+        className="clear-button"
+      >Clear</button>
           </div>
         );
       }

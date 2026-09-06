@@ -17,7 +17,7 @@ import userimage from '../assets/user.png'
           );
         }
         */
-  console.log(userimage)
+ 
         return (
           <div 
           className={
