@@ -1,4 +1,4 @@
-
+ import './ChatMessage.css' 
 import Robotimage from '../assets/robot.png'
 import userimage from '../assets/user.png'
       function ChatMessage({ message, sender }) {
