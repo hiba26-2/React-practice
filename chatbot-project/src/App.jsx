@@ -1,72 +1,10 @@
-import { useState,useRef,useEffect } from 'react'
+import { useState} from 'react'
 import {ChatInput} from './components/ChatInput'
-import Robotimage from './assets/robot.png'
-import userimage from './assets/user.png'
+
+import {ChatMessages} from './components/ChatMessages'
+
 import './App.css'
-
-
-
-      function ChatMessage({ message, sender }) {
-        // const message = props.message;
-        // const sender = props.sender;
-        // const { message, sender } = props;
-
-        /*
-        if (sender === 'robot') {
-          return (
-            <div>
-              <img src="robot.png" width="50" />
-              {message}
-            </div>
-          );
-        }
-        */
-
-        return (
-          <div 
-          className={
-            sender==='user'?'chat-message-user'
-            :'chat-message-robot'}>
-            {sender === 'robot' && (
-              <img src={Robotimage}className="profile" />
-            )}
-            <div className="chat-message-text">
-              {message}
-            </div>
-            {sender === 'user' && (
-              <img src={userimage} className="profile" />
-            )}
-          </div>
-        );
-      }
-
-      function ChatMessages({ chatMessages }) {
-         const chatMessagesRef=  useRef(null);
-         useEffect(()=>{
-    const contElem =  chatMessagesRef.current
-          //ref-container with react features, can save html element
-          if(contElem){
-            contElem.scrollTop=contElem.scrollHeight;
-          }
-        },[chatMessages]);//depencency array, when does it run 
-
-
-        return (
-          <div className="chat-messages-contianer"
-          ref={chatMessagesRef}>
-            {chatMessages.map((chatMessage) => {
-
-              return (
-                <ChatMessage
-                  message={chatMessage.message}
-                  sender={chatMessage.sender}
-                  key={chatMessage.id}
-                />
-              );
-            })}
-          </div>
-        );
-      }
+  
  function App() {
         const [chatMessages, setChatMessages] = useState([{
           message: 'hello chatbot',
