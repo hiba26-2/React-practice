@@ -2,7 +2,7 @@
         display: flex;
       justify-content: end;
       align-items: start;
-
+      
       }
       .chat-message-robot{
         display: flex;
@@ -20,5 +20,13 @@ margin-bottom:20px;
   max-width: 300px;
 }
 .profile{
-  width:45px;
+      width:45px;
+      height:45px;
+      border-radius:45px;
+      object-fit: cover;
+}
+.chat-message-time{
+  font-size:14px;
+  color:rgb(123,125,125);
+  margin-top: 5px;
 }
