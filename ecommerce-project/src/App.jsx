@@ -2,7 +2,7 @@ import { OrdersPage } from './pages/OrdersPage'
 import {HomePage} from './pages/HomePage'
 import {TrackingPage} from './pages/TrackingPage'
 import {Routes,Route} from 'react-router'
-import {CheckoutPage} from './pages/CheckoutPage'
+import {CheckoutPage} from './pages/checkout/CheckoutPage'
 import './App.css'
 
 function App() {
