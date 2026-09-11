@@ -10,9 +10,9 @@ export function TrackingPage(){
 
     <div className="tracking-page">
       <div className="order-tracking">
-        <a className="back-to-orders-link link-primary" href="/orders">
+        <Link to="/orders" className="back-to-orders-link link-primary" >
           View all orders
-        </a>
+        </Link>
 
         <div className="delivery-date">
           Arriving on Monday, June 13
