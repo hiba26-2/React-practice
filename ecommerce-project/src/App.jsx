@@ -1,5 +1,6 @@
 import { OrdersPage } from './pages/OrdersPage'
 import {HomePage} from './pages/HomePage'
+import {PageNotFound} from './pages/PageNotFound'
 import {TrackingPage} from './pages/TrackingPage'
 import {Routes,Route} from 'react-router'
 import {CheckoutPage} from './pages/checkout/CheckoutPage'
@@ -16,6 +17,7 @@ function App() {
       <Route  path ="checkout"  element ={<CheckoutPage/>}/>
        <Route  path ="orders"  element ={<OrdersPage/>}/>
         <Route  path ="tracking"  element ={<TrackingPage/>}/>
+        <Route path ="*" element={<PageNotFound/>}/>
    </Routes>
   
   )
