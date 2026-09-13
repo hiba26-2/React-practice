@@ -6,7 +6,7 @@ import CheckmarkIcon from '../assets/images/icons/checkmark.png';
 import './HomePage.css'
 
 
-export function HomePage(cart){
+export function HomePage({cart}){
   const[products,setProducts]=useState([]);
 
   useEffect(()=>{
@@ -29,8 +29,8 @@ export function HomePage(cart){
 
         {products.map((product)=>{
               return (
-   <div className="product-container">
-          <div key={product.id} className="product-image-container">
+   <div key={product.id} className="product-container">
+          <div  className="product-image-container">
             <img className="product-image"
               src= {product.image}/>
           </div>
