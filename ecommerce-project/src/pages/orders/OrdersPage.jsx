@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState,useEffect,Fragment} from 'react'
 import {Header} from '../../components/Header'
+import { OrdersGrid } from './OrdersGrid'
 import './OrdersPage.css'
 
 export function OrdersPage({cart}){
