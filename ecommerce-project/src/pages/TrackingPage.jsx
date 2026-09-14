@@ -25,6 +25,9 @@ const totalDeliveryTimesMs=orderProduct.estimatedDeliveryTimeMs - order.orderTim
 const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
 const deliveryPercent = Math.min(
   (timePassedMs / totalDeliveryTimesMs) * 100,100);
+ const isPreparing = deliveryPercent < 33;
+  const isShipped = deliveryPercent >= 33 && deliveryPercent < 100;
+  const isDelivered = deliveryPercent === 100;
     return(
         <>
           <title>Tracking</title>
@@ -38,6 +41,7 @@ const deliveryPercent = Math.min(
         </Link>
 
         <div className="delivery-date">
+          {deliveryPercent >= 100 ? "Delivered on" : "Arriving on"}{" "}
          {dayjs(orderProduct.estimatedDeliveryTimeMs).format('MMMM D')}
         </div>
 
@@ -51,13 +55,13 @@ const deliveryPercent = Math.min(
         <img className="product-image" src={orderProduct.product.image} />
 
         <div className="progress-labels-container">
-          <div className="progress-label">
+         <div className={`progress-label ${isPreparing && 'current-status'}`}>
             Preparing
           </div>
-          <div className="progress-label current-status">
+          <div className={`progress-label ${isShipped && 'current-status'}`}>
             Shipped
           </div>
-          <div className="progress-label">
+          <div className={`progress-label ${isDelivered && 'current-status'}`}>
             Delivered
           </div>
         </div>
