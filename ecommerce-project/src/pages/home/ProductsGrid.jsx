@@ -1,6 +1,5 @@
 import { formatMoney } from "../../utils/money";
-
-export function ProductsGrid(products){
+export function ProductsGrid({products}){
     return(
    <div className="products-grid">
 
@@ -46,7 +45,7 @@ export function ProductsGrid(products){
           <div className="product-spacer"></div>
 
           <div className="added-to-cart">
-            <img src={CheckmarkIcon} />
+            <img src='images/iconscheckmark.png' />
             Added
           </div>
 
