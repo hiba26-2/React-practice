@@ -1,5 +1,5 @@
-import { OrdersPage } from './pages/OrdersPage'
-import {HomePage} from './pages/HomePage'
+import { OrdersPage } from './pages/orders/OrdersPage'
+import {HomePage} from './pages/home/HomePage'
 import {PageNotFound} from './pages/PageNotFound'
 import{useState,useEffect} from 'react';
 import axios from 'axios';
