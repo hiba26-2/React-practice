@@ -6,6 +6,7 @@ import axios from 'axios';
 import {TrackingPage} from './pages/TrackingPage'
 import {Routes,Route} from 'react-router'
 import {CheckoutPage} from './pages/checkout/CheckoutPage'
+
 import './App.css'
 
 function App() {
@@ -13,18 +14,14 @@ function App() {
     const [cart,setCart]=useState([])
     useEffect(()=>{
       const fetchAppData= async()=>{
-        await axios.get('/api/cart-items?expand=product')
-       .then((response)=>{
+       let response= await axios.get('/api/cart-items?expand=product')
+       
           setCart (response.data)
-       });
+       
       }
      fetchAppData(); 
  
     },[])
-      
-
-  
-
   return (
     
     <Routes>
