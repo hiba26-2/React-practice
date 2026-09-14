@@ -21,6 +21,10 @@ if(!order){
 const orderProduct=order.products.find((orderProduct)=>{
   return orderProduct.product.id===productId
 })
+const totalDeliveryTimesMs=orderProduct.estimatedDeliveryTimeMs - order.orderTimeMs;
+const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
+const deliveryPercent = Math.min(
+  (timePassedMs / totalDeliveryTimesMs) * 100,100);
     return(
         <>
           <title>Tracking</title>
@@ -59,7 +63,7 @@ const orderProduct=order.products.find((orderProduct)=>{
         </div>
 
         <div className="progress-bar-container">
-          <div className="progress-bar"></div>
+          <div className="progress-bar" style={{ width: `${deliveryPercent}%` }}></div>
         </div>
       </div>
     </div>
