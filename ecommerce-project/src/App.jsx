@@ -10,24 +10,23 @@ import {CheckoutPage} from './pages/checkout/CheckoutPage'
 import './App.css'
 
 function App() {
-
+      const loadCart= async()=>{
+        const response= await axios.get('/api/cart-items?expand=product')
+       setCart (response.data)
+       
+      };
     const [cart,setCart]=useState([])
     useEffect(()=>{
-      const fetchAppData= async()=>{
-       let response= await axios.get('/api/cart-items?expand=product')
-       
-          setCart (response.data)
-       
-      }
-     fetchAppData(); 
+    
+     loadCart(); 
  
     },[])
   return (
     
     <Routes>
-      <Route  index  element ={<HomePage cart={cart}/>}/>
+      <Route  index  element ={<HomePage cart={cart} loadCart={loadCart}/>}/>
      
-        <Route  path ="checkout"  element ={<CheckoutPage cart={cart}/>}/>
+        <Route  path ="checkout"  element ={<CheckoutPage cart={cart} />}/>
         <Route  path ="orders"  element ={<OrdersPage cart ={cart}/>}/>
         <Route  path="tracking/:orderId/:productId" element={<TrackingPage cart={cart} />}/>
         <Route path ="*" element={<PageNotFound/>}/>
