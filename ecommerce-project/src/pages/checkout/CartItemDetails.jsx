@@ -1,5 +1,6 @@
 import { formatMoney } from "../../utils/money"
 import axios from "axios"
+import {useState } from 'react'
 export function CartItemDetails({cartItem,loadCart}){
   const deleteCartItem=async()=>{
 
@@ -7,6 +8,8 @@ export function CartItemDetails({cartItem,loadCart}){
     await loadCart();
 
   }
+  const [quantity, setQuantity] = useState(cartItem.quantity)
+const[update,setupdate]=useState(false)
    return(
     <>
             <img className="product-image"
@@ -20,11 +23,19 @@ export function CartItemDetails({cartItem,loadCart}){
                   {formatMoney(cartItem.product.pricecent)}
                 </div>
                 <div className="product-quantity">
-                 
-                  <span>
-                    Quantity:  <input type='text' className="quantity-textbox"  /> <span className="quantity-label"></span>
-                  </span>
-                  <span className="update-quantity-link link-primary">
+                    {update ? (
+                      <input type='text' className="quantity-textbox" value={quantity} onChange={(event) => setQuantity(event.target.value)} />
+                       ) : (
+                     <span> Quantity:{quantity} <span className="quantity-label"></span>
+                     </span>
+)}
+                  
+                  <span className="update-quantity-link link-primary"
+                  
+                   onClick={() => {
+                      setupdate(!update)
+                  }}
+                  >
                     Update
                   </span>
                   <span className="delete-quantity-link link-primary"
