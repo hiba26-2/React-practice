@@ -9,7 +9,19 @@ export function CartItemDetails({cartItem,loadCart}){
 
   }
   const [quantity, setQuantity] = useState(cartItem.quantity)
-const[update,setupdate]=useState(false)
+  const[isUpdating,setisUpdating]=useState(false)
+ const update = async () => {
+   
+    if (isUpdating) {
+      await axios.put(`/api/cart-items/${cartItem.productId}`, {
+        quantity: Number(quantity),
+      });
+      await loadCart();
+      setisUpdating(false);
+    } else {
+      setisUpdating(true);
+    }
+  }
    return(
     <>
             <img className="product-image"
@@ -23,7 +35,7 @@ const[update,setupdate]=useState(false)
                   {formatMoney(cartItem.product.pricecent)}
                 </div>
                 <div className="product-quantity">
-                    {update ? (
+                    {isUpdating ? (
                       <input type='text' className="quantity-textbox" value={quantity} onChange={(event) => setQuantity(event.target.value)} />
                        ) : (
                      <span> Quantity:{quantity} <span className="quantity-label"></span>
@@ -32,9 +44,7 @@ const[update,setupdate]=useState(false)
                   
                   <span className="update-quantity-link link-primary"
                   
-                   onClick={() => {
-                      setupdate(!update)
-                  }}
+                   onClick={update}
                   >
                     Update
                   </span>
