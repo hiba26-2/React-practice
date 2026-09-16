@@ -14,7 +14,6 @@ export function HomePage({cart,loadCart}){
    const response =await axios.get('/api/products')
      setProducts (response.data)
     }
-  
       getHomeData();
       },[]);
      
@@ -28,7 +27,7 @@ export function HomePage({cart,loadCart}){
 
         <div className="home-page">
            <ProductsGrid products={products} loadCart={loadCart} />
-         </div>
+        </div>
     </>
     );
 }

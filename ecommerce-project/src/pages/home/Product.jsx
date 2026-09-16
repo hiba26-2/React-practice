@@ -3,20 +3,26 @@ import { useState } from "react";
 import { formatMoney } from "../../utils/money";
 export function Product ({product,loadCart}){
     const [quantity,setQuantity]=useState(1)
-    const addToCart=
-        async()=>{
-        await axios.post('/api/cart-items',{
-            productId:product.id,
-            quantity
-          });
-           await loadCart();
-          }
-    
-    const selectQuantity =(event)=>{
-              const quantitySelected =Number( event.target.value)
-              setQuantity(quantitySelected);
+        const addToCart=
+            async()=>{
+            await axios.post('/api/cart-items',{
+                productId:product.id,
+                quantity
+              });
+              await loadCart();
+              setadded(true)
+              setTimeout(()=>{
+                setadded(false)
+              },2000)
              
-            }
+              }
+    
+        const selectQuantity =(event)=>{
+        const quantitySelected =Number( event.target.value)
+        setQuantity(quantitySelected);
+                
+                }
+    const [added,setadded]=useState(false);
               return (
 
         <div  className="product-container">
@@ -58,13 +64,13 @@ export function Product ({product,loadCart}){
 
           <div className="product-spacer"></div>
 
-          <div className="added-to-cart">
-            <img src='images/iconscheckmark.png' />
+          <div className="added-to-cart" style={{opacity:added? 1:0}}>
+            <img src='images/icons/checkmark.png' />
             Added
           </div>
 
           <button className="add-to-cart-button button-primary"
-       onClick={addToCart}>
+             onClick={addToCart}>
             Add to Cart
           </button>
         </div>
