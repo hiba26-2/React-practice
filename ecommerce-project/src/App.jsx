@@ -8,7 +8,7 @@ import {Routes,Route} from 'react-router'
 import {CheckoutPage} from './pages/checkout/CheckoutPage'
 
 import './App.css'
-
+ window.axios = axios;
 function App() {
       const loadCart= async()=>{
         const response= await axios.get('/api/cart-items?expand=product')
@@ -19,8 +19,9 @@ function App() {
     useEffect(()=>{
     
      loadCart(); 
- 
+
     },[])
+   
   return (
     
     <Routes>
