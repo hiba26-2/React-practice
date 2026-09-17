@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router';
+import {NavLink, useNavigate} from 'react-router';
 import { useState } from 'react';
 import LogoWhite from '../assets/images/logo-white.png';
 import MobileLogoWhite from '../assets/images/mobile-logo-white.png';
@@ -17,8 +17,9 @@ import SearchIcon from '../assets/images/icons/search-icon.png';
         const updateSearchInput = (event) => {
             setSearch(event.target.value);
         };
-
+        const navigate=useNavigate();
         const searchProducts = () => {
+         navigate(`/?search=${search}`)
             console.log(search);
         };
 
@@ -39,7 +40,9 @@ import SearchIcon from '../assets/images/icons/search-icon.png';
                 value={search} onChange={updateSearchInput} />
 
                 <button className="search-button"
-                 onClick={searchProducts}>
+                 onClick={searchProducts 
+                             }>
+                
                 <img className="search-icon" src= {SearchIcon}/>
                 </button>
             </div>
