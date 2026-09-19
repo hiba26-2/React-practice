@@ -10,35 +10,39 @@ vi.mock('axios');
 
 describe('HomePage component', () => {
   let loadCart;
-  let productContainers;
+
   beforeEach(() => {
     loadCart = vi.fn();
+
+    vi.clearAllMocks();
 
     axios.get.mockImplementation(async (urlPath) => {
       if (urlPath === '/api/products') {
         return {
-          data: [{
-            id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-            image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-            name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-            rating: {
-              stars: 4.5,
-              count: 87
+          data: [
+            {
+              id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+              image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
+              name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
+              rating: {
+                stars: 4.5,
+                count: 87
+              },
+              priceCents: 1090,
+              keywords: ['socks', 'sports', 'apparel']
             },
-            priceCents: 1090,
-            keywords: ["socks", "sports", "apparel"]
-          },
-          {
-            id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-            image: "images/products/intermediate-composite-basketball.jpg",
-            name: "Intermediate Size Basketball",
-            rating: {
-              stars: 4,
-              count: 127
-            },
-            priceCents: 2095,
-            keywords: ["sports", "basketballs"]
-          }]
+            {
+              id: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+              image: 'images/products/intermediate-composite-basketball.jpg',
+              name: 'Intermediate Size Basketball',
+              rating: {
+                stars: 4,
+                count: 127
+              },
+              priceCents: 2095,
+              keywords: ['sports', 'basketballs']
+            }
+          ]
         };
       }
     });
@@ -50,7 +54,9 @@ describe('HomePage component', () => {
         <HomePage cart={[]} loadCart={loadCart} />
       </MemoryRouter>
     );
-    productContainers = await screen.findAllByTestId('product-container');
+
+    const productContainers =
+      await screen.findAllByTestId('product-container');
 
     expect(productContainers.length).toBe(2);
 
@@ -65,34 +71,107 @@ describe('HomePage component', () => {
     ).toBeInTheDocument();
   });
 
-  it('add both products to the cart',async()=>{
+  it('add both products to the cart', async () => {
     render(
-  <MemoryRouter>
-    <HomePage cart={[]} loadCart={loadCart} />
-  </MemoryRouter>
-);
- 
-  productContainers =await screen.findAllByTestId('product-container');
-  const firstAddToCartButton =
-  within(productContainers[0]).getByTestId('add-to-cart-button');
-   const user = userEvent.setup();
-  await user.click(firstAddToCartButton);
+      <MemoryRouter>
+        <HomePage cart={[]} loadCart={loadCart} />
+      </MemoryRouter>
+    );
 
-   const secondAddToCartButton =
-  within(productContainers[1]).getByTestId('add-to-cart-button');
+    const productContainers =
+      await screen.findAllByTestId('product-container');
+
+    const user = userEvent.setup();
+
+    const firstAddToCartButton =
+      within(productContainers[0])
+        .getByTestId('add-to-cart-button');
+
+    await user.click(firstAddToCartButton);
+
+    const secondAddToCartButton =
+      within(productContainers[1])
+        .getByTestId('add-to-cart-button');
+
     await user.click(secondAddToCartButton);
-    expect(axios.post).toHaveBeenNthCalledWith(1, 
-      '/api/cart-items',{
-         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-         quantity: 1
+
+    expect(axios.post).toHaveBeenNthCalledWith(
+      1,
+      '/api/cart-items',
+      {
+        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+        quantity: 1
       }
-      )
-    expect(axios.post).toHaveBeenNthCalledWith(2, 
-      '/api/cart-items',{
+    );
+
+    expect(axios.post).toHaveBeenNthCalledWith(
+      2,
+      '/api/cart-items',
+      {
         productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
         quantity: 1
       }
-      )
+    );
+
     expect(axios.post).toHaveBeenCalledTimes(2);
-  })
+  });
+
+  it('add products with different quantities', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage cart={[]} loadCart={loadCart} />
+      </MemoryRouter>
+    );
+
+    const productContainers =
+      await screen.findAllByTestId('product-container');
+
+    const user = userEvent.setup();
+
+    // First product: change quantity to 2
+    const firstQuantitySelector =
+      within(productContainers[0])
+        .getByTestId('product-quantity');
+
+    await user.selectOptions(firstQuantitySelector, '2');
+
+    // Click first Add to Cart button
+    const firstAddToCartButton =
+      within(productContainers[0])
+        .getByTestId('add-to-cart-button');
+
+    await user.click(firstAddToCartButton);
+
+    // Second product: change quantity to 3
+    const secondQuantitySelector =
+      within(productContainers[1])
+        .getByTestId('product-quantity');
+
+    await user.selectOptions(secondQuantitySelector, '3');
+
+    // Click second Add to Cart button
+    const secondAddToCartButton =
+      within(productContainers[1])
+        .getByTestId('add-to-cart-button');
+
+    await user.click(secondAddToCartButton);
+
+    expect(axios.post).toHaveBeenNthCalledWith(
+      1,
+      '/api/cart-items',
+      {
+        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+        quantity: 2
+      }
+    );
+
+    expect(axios.post).toHaveBeenNthCalledWith(
+      2,
+      '/api/cart-items',
+      {
+        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+        quantity: 3
+      }
+    );
+  });
 });
