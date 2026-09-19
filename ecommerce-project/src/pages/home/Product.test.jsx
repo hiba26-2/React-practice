@@ -51,7 +51,7 @@ describe('Product component', () => {
     ).toBeInTheDocument();
   });
 
-  it('adds a product to the cart', async () => {
+   it('adds a product to the cart', async () => {
     render(<Product product={product} loadCart={loadCart} />);
 
     const user = userEvent.setup();
@@ -67,4 +67,11 @@ describe('Product component', () => {
     );
     expect(loadCart).toHaveBeenCalled();
   });
+it('select a quantity',()=>{
+  render(<Product product={product} loadCart={loadCart} />)
+  const quantitySelector=screen.getByTestId('product-quantity');
+  expect(quantitySelector).toHaveValue('1')
+})
+
+
 });
