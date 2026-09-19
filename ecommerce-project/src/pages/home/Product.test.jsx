@@ -7,7 +7,7 @@ import { Product } from './Product';
 
 vi.mock('axios');
 
-describe('Product component', () => {
+describe('Product component', () => { 
   let product;
   let loadCart;
 
@@ -51,7 +51,7 @@ describe('Product component', () => {
     ).toBeInTheDocument();
   });
 
-   it('adds a product to the cart', async () => {
+  it('adds a product to the cart', async () => {
     render(<Product product={product} loadCart={loadCart} />);
 
     const user = userEvent.setup();
@@ -67,11 +67,18 @@ describe('Product component', () => {
     );
     expect(loadCart).toHaveBeenCalled();
   });
-it('select a quantity',()=>{
-  render(<Product product={product} loadCart={loadCart} />)
-  const quantitySelector=screen.getByTestId('product-quantity');
-  expect(quantitySelector).toHaveValue('1')
+  it('select a quantity',async()=>{
+
+    render(<Product product={product} loadCart={loadCart} />)
+    const quantitySelector=screen.getByTestId('product-quantity');
+    expect(quantitySelector).toHaveValue('1')
+  const user = userEvent.setup();
+     await user.selectOptions(quantitySelector,'3');
+     
+  expect(quantitySelector).toHaveValue('3');
+})
 })
 
+  
 
-});
+
