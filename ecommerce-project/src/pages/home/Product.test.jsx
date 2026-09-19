@@ -10,8 +10,9 @@ vi.mock('axios');
 describe('Product component', () => { 
   let product;
   let loadCart;
-
+  let user;
   beforeEach(() => {
+     user = userEvent.setup();
     product = {
       id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
       image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -72,7 +73,7 @@ describe('Product component', () => {
     render(<Product product={product} loadCart={loadCart} />)
     const quantitySelector=screen.getByTestId('product-quantity');
     expect(quantitySelector).toHaveValue('1')
-    const user = userEvent.setup();
+  
     await user.selectOptions(quantitySelector,'3');
       
     expect(quantitySelector).toHaveValue('3');
