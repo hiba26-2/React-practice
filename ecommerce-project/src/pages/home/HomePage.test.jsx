@@ -10,7 +10,7 @@ vi.mock('axios');
 
 describe('HomePage component', () => {
   let loadCart;
-
+  let productContainers;
   beforeEach(() => {
     loadCart = vi.fn();
 
@@ -50,7 +50,7 @@ describe('HomePage component', () => {
         <HomePage cart={[]} loadCart={loadCart} />
       </MemoryRouter>
     );
-    const productContainers = await screen.findAllByTestId('product-container');
+    productContainers = await screen.findAllByTestId('product-container');
 
     expect(productContainers.length).toBe(2);
 
@@ -64,4 +64,35 @@ describe('HomePage component', () => {
         .getByText('Intermediate Size Basketball')
     ).toBeInTheDocument();
   });
+
+  it('add both products to the cart',async()=>{
+    render(
+  <MemoryRouter>
+    <HomePage cart={[]} loadCart={loadCart} />
+  </MemoryRouter>
+);
+ 
+  productContainers =await screen.findAllByTestId('product-container');
+  const firstAddToCartButton =
+  within(productContainers[0]).getByTestId('add-to-cart-button');
+   const user = userEvent.setup();
+  await user.click(firstAddToCartButton);
+
+   const secondAddToCartButton =
+  within(productContainers[1]).getByTestId('add-to-cart-button');
+    await user.click(secondAddToCartButton);
+    expect(axios.post).toHaveBeenNthCalledWith(1, 
+      '/api/cart-items',{
+         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+         quantity: 1
+      }
+      )
+    expect(axios.post).toHaveBeenNthCalledWith(2, 
+      '/api/cart-items',{
+        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+        quantity: 1
+      }
+      )
+    expect(axios.post).toHaveBeenCalledTimes(2);
+  })
 });
